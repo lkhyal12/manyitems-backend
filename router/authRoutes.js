@@ -7,7 +7,7 @@ const {
   getProfile,
   logoutController,
 } = require("../contorollers/authController");
-const protectedRoute = require("../middleware/protectedRoute");
+const { protectedRoute } = require("../middleware/protectedRoute");
 const authRouter = express.Router();
 
 authRouter.post("/register", registerController);
