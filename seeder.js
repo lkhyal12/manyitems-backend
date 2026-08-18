@@ -5,6 +5,7 @@ const ProductModel = require("./models/Product");
 const UserModel = require("./models/User");
 const products = require("./data/products");
 const { logControllerError } = require("./lib/utils");
+const { CartModel } = require("./models/Cart");
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ async function seedData() {
   try {
     await ProductModel.deleteMany();
     await UserModel.deleteMany();
-
+    await CartModel.deleteMany();
     const createdUser = await UserModel.create({
       name: "abdelali",
       email: "abtech11@mail.com",
