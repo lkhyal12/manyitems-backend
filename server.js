@@ -6,6 +6,8 @@ const authRouter = require("./router/authRoutes");
 const cookieParse = require("cookie-parser");
 const productsRouter = require("./router/productsRouter");
 const cartRouter = require("./router/cartRouter");
+const checkoutRouter = require("./router/CheckoutRouter");
+const { ordersRouter } = require("./router/ordersRouter");
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -17,6 +19,8 @@ app.get("/", (req, res) => res.send("welcome to my server"));
 app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/checkout", checkoutRouter);
+app.use("/api/orders", ordersRouter);
 app.listen(PORT, () => {
   conntectToMongoDB();
 });
