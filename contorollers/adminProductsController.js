@@ -1,5 +1,5 @@
 const { logControllerError } = require("../lib/utils");
-const { ProductModel } = require("../models/Product");
+const ProductModel = require("../models/Product");
 async function getAdminProductsController(req, res) {
   try {
     const products = await ProductModel.find({});
