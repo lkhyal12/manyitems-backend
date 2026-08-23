@@ -10,6 +10,8 @@ const checkoutRouter = require("./router/CheckoutRouter");
 const { ordersRouter } = require("./router/ordersRouter");
 const uploadRouter = require("./router/uploadRouter");
 const { subscriberRouter } = require("./router/subscriberRouter");
+const { usersRouter } = require("./router/usersRouter");
+const { adminProductsRouter } = require("./router/adminProductsRouter");
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -25,6 +27,8 @@ app.use("/api/checkout", checkoutRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/upload", uploadRouter);
 app.use("/api", subscriberRouter);
+app.use("/api/admin/users", usersRouter);
+app.use("/api/admin/products", adminProductsRouter);
 app.listen(PORT, () => {
   conntectToMongoDB();
 });
