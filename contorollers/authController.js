@@ -48,6 +48,7 @@ async function loginController(req, res) {
   const { email, password } = req.body;
   if (!email || !password)
     return res.status(400).json({ message: "All fields are required" });
+  console.log(email, password);
   try {
     const user = await UserModel.findOne({ email });
     if (!user) return res.status(401).json({ message: "Invalid credentials" });
@@ -57,7 +58,7 @@ async function loginController(req, res) {
     const accessToken = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "15m" },
+      { expiresIn: "7d" },
     );
     const refreshToken = jwt.sign(
       { userId: user._id },

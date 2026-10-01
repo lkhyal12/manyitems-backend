@@ -17,7 +17,7 @@ async function getAllAdminOrdersController(req, res) {
 async function updateOrderController(req, res) {
   const { id } = req.params;
   try {
-    const order = await OrderModel.findById(id);
+    const order = await OrderModel.findById(id).populate("user", "name");
     if (!order) return res.status(404).json({ message: "Order is not found" });
     order.status = req.body?.status || order.status;
     order.isDelivered =

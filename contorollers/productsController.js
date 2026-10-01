@@ -151,7 +151,20 @@ async function getProductsController(req, res) {
     brand,
     limit,
   } = req.query;
-
+  console.log({
+    collection,
+    size,
+    color,
+    gender,
+    material,
+    minPrice,
+    maxPrice,
+    sortBy,
+    search,
+    category,
+    brand,
+    limit,
+  });
   try {
     const query = {};
     if (collection && collection.toLowerCase() !== "all") {
@@ -230,7 +243,7 @@ async function getSingleProductController(req, res) {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(400).json({ message: "Invalid product ID" });
   try {
-    const product = await ProductModel.findById(id).lean();
+    const product = await ProductModel.findById(id);
     if (!product) return res.status(404).json({ message: "Product not found" });
     return res
       .status(200)

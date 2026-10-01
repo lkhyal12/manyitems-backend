@@ -6,6 +6,7 @@ async function myOrdersController(req, res) {
     const orders = await OrderModel.find({ user: req.user._id }).sort({
       createdAt: -1,
     });
+    console.log(orders);
 
     return res
       .status(200)

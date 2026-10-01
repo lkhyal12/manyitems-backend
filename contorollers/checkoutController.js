@@ -59,11 +59,14 @@ async function finalizeCheckoutController(req, res) {
     if (!checkout) {
       return res.status(404).json({ message: "Checkout session not found" });
     }
+    console.log("-----");
+    console.log({ checkout });
+    console.log("-----");
 
     if (checkout.isPaid && !checkout.isFinalized) {
       const finalOrder = await OrderModel.create({
         user: checkout.user,
-        orderItems: checkout.orderItems,
+        orderItems: checkout.checkoutItems,
         shippingAddress: checkout.shippingAddress,
         paymentMethod: checkout.paymentMethod,
         totalPrice: checkout.totalPrice,
@@ -77,13 +80,16 @@ async function finalizeCheckoutController(req, res) {
       checkout.isFinalized = true;
       checkout.finalizedAt = Date.now();
       await checkout.save();
-      await CartModel.findOneAndDelete({ user: req.user._id });
+      const cart = await CartModel.findOneAndDelete({ user: req.user._id });
+      console.log(cart);
       return res
         .status(201)
         .json({ message: "Order created successfully", order: finalOrder });
     } else if (checkout.isFinalized) {
+      console.log("checkout is already finalized");
       return res.status(400).json({ message: "checkout is already finalized" });
     } else {
+      console.log("Checkout is not paid");
       return res.status(400).json({ message: "Checkout is not paid" });
     }
   } catch (err) {

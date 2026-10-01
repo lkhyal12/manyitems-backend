@@ -79,7 +79,7 @@ async function addToCartController(req, res) {
 // update cart controller
 async function updateCartController(req, res) {
   const { productId, quantity, size, color, guestId, userId } = req.body;
-
+  console.log({ quantity });
   try {
     const cart = await getCart(userId, guestId, CartModel);
     if (!cart) return res.status(404).json({ message: "Cart not found" });
@@ -113,9 +113,12 @@ async function updateCartController(req, res) {
 async function deleteProductController(req, res) {
   const { productId, color, size, guestId, userId } = req.body;
 
+  console.log({ userId, guestId });
   try {
     const cart = await getCart(userId, guestId, CartModel);
-    if (!cart) return res.status(404).json({ message: "Cart not found" });
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
 
     const productIndex = cart.products.findIndex(
       (p) =>
@@ -180,12 +183,10 @@ async function mergeController(req, res) {
       guestCart.guestId = undefined;
       await guestCart.save();
 
-      return res
-        .status(200)
-        .json({
-          message: "Guest Cart transferred successfully",
-          cart: guestCart,
-        });
+      return res.status(200).json({
+        message: "Guest Cart transferred successfully",
+        cart: guestCart,
+      });
     }
 
     guestCart.products.forEach((p) => {

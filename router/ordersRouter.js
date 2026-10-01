@@ -6,6 +6,6 @@ const {
 } = require("../contorollers/ordersController");
 const ordersRouter = express.Router();
 
-ordersRouter.get("/my-orders", protectedRoute, myOrdersController);
+ordersRouter.get("/", protectedRoute, myOrdersController);
 ordersRouter.get("/:id", protectedRoute, getSingleOrderController);
 module.exports = { ordersRouter };
